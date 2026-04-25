@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D练枪游戏</title>
+    <link rel="stylesheet" href="shooting-game.css">
+</head>
+<body>
+    <div id="game-container"></div>
+    
+    <div id="crosshair">
+        <div class="crosshair-line top"></div>
+        <div class="crosshair-line bottom"></div>
+        <div class="crosshair-line left"></div>
+        <div class="crosshair-line right"></div>
+        <div class="crosshair-dot"></div>
+    </div>
+    
+    <div id="scope-crosshair" class="hidden">
+        <div class="scope-line vertical"></div>
+        <div class="scope-line horizontal"></div>
+        <div class="scope-center"></div>
+        <div class="scope-mil-dot mil-top"></div>
+        <div class="scope-mil-dot mil-bottom"></div>
+        <div class="scope-mil-dot mil-left"></div>
+        <div class="scope-mil-dot mil-right"></div>
+    </div>
+    
+    <div id="hud">
+        <div id="health-bar">
+            <div class="bar-label">生命值</div>
+            <div class="bar-container">
+                <div class="bar-fill" id="health-fill"></div>
+            </div>
+        </div>
+        
+        <div id="ammo-display">
+            <span id="current-ammo">30</span>/<span id="reserve-ammo">120</span>
+        </div>
+        
+        <div id="score-display">
+            <div>得分: <span id="score">0</span></div>
+            <div>击杀: <span id="kills">0</span></div>
+        </div>
+        
+        <div id="chest-status" class="hidden">
+            📦 携带宝箱
+        </div>
+        
+        <div id="weapon-info">
+            <div id="weapon-name">AK-47 突击步枪</div>
+            <div id="weapon-stats">
+                <span>伤害: <span id="stat-damage">35</span></span>
+                <span>射速: <span id="stat-firerate">600</span>RPM</span>
+                <span>有效射程: <span id="stat-range">400</span>m</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="weapon-select">
+        <h3>选择武器</h3>
+        <div id="weapon-categories">
+            <button class="category-btn active" data-category="assault">突击步枪</button>
+            <button class="category-btn" data-category="smg">冲锋枪</button>
+            <button class="category-btn" data-category="dmr">精确射手步枪</button>
+        </div>
+        <div id="weapon-list"></div>
+        <div id="scope-select">
+            <h4>瞄准镜</h4>
+            <div id="scope-list"></div>
+        </div>
+        <button id="start-game">开始游戏</button>
+    </div>
+    
+    <div id="pause-menu" class="hidden">
+        <h2>游戏暂停</h2>
+        <button id="resume-btn">继续游戏</button>
+        <button id="change-weapon-btn">更换武器</button>
+        <button id="settings-btn">设置</button>
+        <button id="restart-btn">重新开始</button>
+    </div>
+    
+    <div id="game-over" class="hidden">
+        <h2>游戏结束</h2>
+        <div>最终得分: <span id="final-score">0</span></div>
+        <div>击杀数: <span id="final-kills">0</span></div>
+        <button id="restart-btn">重新开始</button>
+    </div>
+    
+    <div id="settings-menu" class="hidden">
+        <h2>设置</h2>
+        <div class="setting-item">
+            <label for="sensitivity-slider">鼠标灵敏度: <span id="sensitivity-value">100</span>%</label>
+            <input type="range" id="sensitivity-slider" min="10" max="200" value="100">
+        </div>
+        <div class="setting-item">
+            <button id="settings-back">返回</button>
+        </div>
+    </div>
+    
+    <div id="hit-marker" class="hidden">
+        <div class="hit-x"></div>
+    </div>
+    
+    <div id="damage-indicator" class="hidden"></div>
+    
+    <div id="kill-notification" class="hidden">
+        <div class="kill-text">击败敌人</div>
+        <div class="kill-distance"></div>
+        <div class="kill-score"></div>
+    </div>
+    
+    <div id="instructions">
+        <h3>操作说明</h3>
+        <p>WASD - 移动</p>
+        <p>鼠标 - 瞄准</p>
+        <p>左键 - 射击</p>
+        <p>右键 - 瞄准镜</p>
+        <p>R - 换弹</p>
+        <p>ESC - 暂停/继续</p>
+        <p>1 - 突击步枪</p>
+        <p>2 - 冲锋枪</p>
+        <p>3 - 精确射手步枪</p>
+        <p>Q - 切换同类型武器</p>
+        <p>G - 切换武器类型</p>
+        <p>滚轮 - 切换瞄准镜</p>
+        <p>F - 长按恢复血量</p>
+        <p>V - 撤离(携带宝箱时)</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="shooting-game.js"></script>
+</body>
+</html>
