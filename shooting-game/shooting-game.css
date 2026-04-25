@@ -1,0 +1,800 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000;
+    color: #fff;
+}
+
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#crosshair {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 100;
+}
+
+.crosshair-line {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.crosshair-line.top {
+    width: 2px;
+    height: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -25px;
+}
+
+.crosshair-line.bottom {
+    width: 2px;
+    height: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -25px;
+}
+
+.crosshair-line.left {
+    width: 15px;
+    height: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -25px;
+}
+
+.crosshair-line.right {
+    width: 15px;
+    height: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -25px;
+}
+
+.crosshair-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 0, 0, 0.9);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#scope-crosshair {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 100;
+    width: 200px;
+    height: 200px;
+}
+
+#scope-crosshair .scope-line {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+#scope-crosshair .scope-line.vertical {
+    width: 1px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#scope-crosshair .scope-line.horizontal {
+    width: 100%;
+    height: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#scope-crosshair .scope-center {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border: 2px solid rgba(255, 0, 0, 0.9);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent;
+}
+
+#scope-crosshair .scope-mil-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+}
+
+#scope-crosshair .mil-top {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#scope-crosshair .mil-bottom {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#scope-crosshair .mil-left {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#scope-crosshair .mil-right {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#hud {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+    z-index: 50;
+}
+
+#health-bar {
+    width: 200px;
+}
+
+.bar-label {
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #aaa;
+}
+
+.bar-container {
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #444;
+    border-radius: 3px;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff0000, #ff4444);
+    transition: width 0.3s ease;
+    width: 100%;
+}
+
+#ammo-display {
+    font-size: 36px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#ammo-display #current-ammo {
+    color: #fff;
+}
+
+#ammo-display #reserve-ammo {
+    color: #aaa;
+    font-size: 24px;
+}
+
+#score-display {
+    text-align: right;
+    font-size: 18px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#score-display div {
+    margin-bottom: 5px;
+}
+
+#weapon-info {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 15px;
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+#weapon-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#weapon-stats {
+    font-size: 12px;
+    color: #aaa;
+}
+
+#weapon-stats span {
+    margin-right: 15px;
+}
+
+#weapon-select {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(20, 20, 30, 0.95);
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid #444;
+    z-index: 200;
+    min-width: 700px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+#weapon-select h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+#weapon-categories {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.category-btn {
+    padding: 10px 20px;
+    background: #333;
+    border: 1px solid #555;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.category-btn:hover {
+    background: #444;
+}
+
+.category-btn.active {
+    background: #0066cc;
+    border-color: #0088ff;
+}
+
+#weapon-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.weapon-card {
+    background: #222;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #333;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.weapon-card:hover {
+    border-color: #0066cc;
+    transform: translateY(-2px);
+}
+
+.weapon-card.selected {
+    border-color: #00ff00;
+    background: #1a2a1a;
+}
+
+.weapon-card h4 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.weapon-card .stats {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.weapon-card .stat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 8px;
+}
+
+.weapon-card .stat-row span {
+    width: 70px;
+    flex-shrink: 0;
+}
+
+.weapon-card .stat-value {
+    width: 65px;
+    text-align: right;
+    color: #fff;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.weapon-card .stat-bar {
+    flex: 1;
+    height: 8px;
+    background: #333;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.weapon-card .stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0066cc, #00aaff);
+    transition: width 0.3s;
+}
+
+.weapon-card .stat-fill.falloff {
+    background: linear-gradient(90deg, #ff6600, #ff3300);
+}
+
+.weapon-card .pros-cons {
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+.weapon-card .pros {
+    color: #00ff00;
+}
+
+.weapon-card .cons {
+    color: #ff4444;
+}
+
+#scope-select {
+    margin-bottom: 20px;
+}
+
+#scope-select h4 {
+    margin-bottom: 10px;
+    color: #aaa;
+}
+
+#scope-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.scope-btn {
+    padding: 8px 15px;
+    background: #222;
+    border: 1px solid #444;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.scope-btn:hover {
+    background: #333;
+}
+
+.scope-btn.selected {
+    background: #006600;
+    border-color: #00ff00;
+}
+
+#start-game {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(180deg, #0066cc, #004499);
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+#start-game:hover {
+    background: linear-gradient(180deg, #0077dd, #0055aa);
+}
+
+#pause-menu, #game-over {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(20, 20, 30, 0.95);
+    padding: 40px;
+    border-radius: 10px;
+    border: 2px solid #444;
+    z-index: 200;
+    text-align: center;
+}
+
+#pause-menu h2, #game-over h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+#pause-menu button, #game-over button {
+    display: block;
+    width: 200px;
+    margin: 10px auto;
+    padding: 12px;
+    background: #333;
+    border: 1px solid #555;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+#pause-menu button:hover, #game-over button:hover {
+    background: #444;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#hit-marker {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 150;
+    width: 30px;
+    height: 30px;
+}
+
+#hit-marker .hit-x {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#hit-marker .hit-x::before,
+#hit-marker .hit-x::after {
+    content: '';
+    position: absolute;
+    background: #ffffff;
+    border-radius: 1px;
+}
+
+#hit-marker .hit-x::before {
+    width: 30px;
+    height: 3px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) rotate(45deg);
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+}
+
+#hit-marker .hit-x::after {
+    width: 30px;
+    height: 3px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) rotate(-45deg);
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+}
+
+#settings-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid #333;
+    text-align: center;
+    z-index: 300;
+    color: #fff;
+    min-width: 300px;
+}
+
+#settings-menu h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #4CAF50;
+}
+
+.setting-item {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.setting-item label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #ddd;
+}
+
+.setting-item input[type="range"] {
+    width: 100%;
+    margin: 10px 0;
+}
+
+#settings-menu button {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+#settings-menu button:hover {
+    background: #444;
+}
+
+#hit-marker.headshot .hit-x::before,
+#hit-marker.headshot .hit-x::after {
+    background: #ff0000;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
+}
+
+#damage-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff4444;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    z-index: 150;
+    animation: damage-fade 0.5s ease-out forwards;
+}
+
+@keyframes damage-fade {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -100%) scale(1.5);
+    }
+}
+
+#kill-notification {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 160;
+    animation: kill-slide 2s ease-out forwards;
+}
+
+#kill-notification .kill-text {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff4444;
+    text-shadow: 0 0 10px rgba(255, 68, 68, 0.8), 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 5px;
+}
+
+#kill-notification .kill-distance {
+    font-size: 16px;
+    color: #ffcc00;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#kill-notification .kill-score {
+    font-size: 14px;
+    color: #44ff44;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-top: 3px;
+}
+
+#kill-notification.headshot .kill-text {
+    color: #ff0000;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-size: 32px;
+}
+
+#kill-notification.headshot .kill-text::before {
+    content: '爆头! ';
+}
+
+@keyframes kill-slide {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    80% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px);
+    }
+}
+
+@keyframes damage-pulse {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+#instructions {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #aaa;
+    z-index: 50;
+    pointer-events: none;
+}
+
+#instructions h3 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+#instructions p {
+    margin-bottom: 5px;
+}
+
+#chest-status {
+    position: fixed;
+    top: 120px;
+    left: 20px;
+    background: rgba(255, 215, 0, 0.9);
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 100;
+    animation: chest-pulse 1s infinite;
+}
+
+#chest-status.hidden {
+    display: none;
+}
+
+@keyframes chest-pulse {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    }
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    20% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    80% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+}
+
+.reloading {
+    animation: reload-pulse 0.5s ease-in-out infinite;
+}
+
+@keyframes reload-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.scope-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.8) 40%);
+    pointer-events: none;
+    z-index: 90;
+}
+
+.muzzle-flash {
+    position: fixed;
+    bottom: 100px;
+    right: 200px;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, #ffff00, #ff8800, transparent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 80;
+    animation: flash 0.1s ease-out forwards;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+.hit-effect {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border: 3px solid #ff0000;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 150;
+    animation: hit-expand 0.3s ease-out forwards;
+}
+
+@keyframes hit-expand {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
+    }
+}
